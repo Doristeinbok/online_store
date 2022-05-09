@@ -164,6 +164,8 @@ public class Main {
 					
 					break;
 					
+				case 5:
+					System.out.println("this is settings option");
 					
 				case 6: //Customer List
 					if(currentCustomer != null) {

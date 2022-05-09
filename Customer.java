@@ -4,6 +4,7 @@ package online_store;
 public class Customer {
 	private int id;
 	private String name;
+	private String email;
 	private int password;
 	private Cart cart;
 	
@@ -46,6 +47,14 @@ public class Customer {
 		this.cart = cart;
 	}
 	
+	public String getEmail() {
+		return email;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	
 	@Override
 	public String toString() {
