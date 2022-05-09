@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Cart {
 	private String name;
+	private int amount;
 	private List<Product> products = new ArrayList<>(); 
 
 	
@@ -28,5 +29,13 @@ public class Cart {
 
 	public String getName() {
 		return name;
+	}
+
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
 	}
 }
