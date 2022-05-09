@@ -13,16 +13,17 @@ public class Main {
 	private static Customer currentCustomer = null; 
 	
 	static {
-		customers.add(new Customer(0, "dori", 1234));
-		customers.add(new Customer(1, "gili", 1234));
-		customers.add(new Customer(2, "lior", 1234));
-		customers.add(new Customer(3, "beeri", 1234));
+		customers.add(new Customer(0, "dori", "dori@gmail.com", 1234));
+		customers.add(new Customer(1, "gili", "gili@gmail.com", 1234));
+		customers.add(new Customer(2, "lior", "lior@gmail.com", 1234));
+		customers.add(new Customer(3, "beeri", "beeri@gmail.com", 1234));
 		lastUserIndex = 4;
 	}
 	
 	public static void main(String[] args) {
 		int number;
 		String name = "";
+		String email = "";
 		String answer = "";
 		int password;	
 		String[] itemsToCatalog= {"computer", "mouse", "keyboard", "cable", "phone",
@@ -63,10 +64,12 @@ public class Main {
 					
 					System.out.println("Please insert your name");
 					name = sc.next(); 
+					System.out.println("Please insert your email");
+					email = sc.next();
 					System.out.println("Please insert password");
 					password = sc.nextInt();
 					
-					customers.add(new Customer(lastUserIndex, name, password));	
+					customers.add(new Customer(lastUserIndex, name, email, password));	
 //					lastUserIndex++;
 					currentCustomer = customers.get(customers.size() - 1);
 					break;
@@ -165,7 +168,26 @@ public class Main {
 					break;
 					
 				case 5:
-					System.out.println("this is settings option");
+					if(null == currentCustomer) {
+						System.out.println("Please sign in first");
+						break;
+					}
+					
+					int flag = 1;
+					while(1 == flag) {
+						System.out.println("please enter new email");
+						email = sc.next();
+						if(email == currentCustomer.getEmail()) {
+							System.out.println("The new email is the same as the old one");
+							continue;
+						}
+						
+						currentCustomer.setEmail(email);
+						System.out.println("Your new email \"" + email + "\" is set");
+						flag = 0;
+					}
+					
+					break;
 					
 				case 6: //Customer List
 					if(currentCustomer != null) {

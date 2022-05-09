@@ -8,9 +8,10 @@ public class Customer {
 	private int password;
 	private Cart cart;
 	
-	public Customer(int id, String name, int passward) {
+	public Customer(int id, String name, String email, int passward) {
 		this.id = id;
 		this.name = name;
+		this.email = email;
 		this.password = passward;
 		setCart(new Cart(name + "'s cart"));
 	}
