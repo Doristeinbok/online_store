@@ -1,11 +1,13 @@
-package online_store;
+package online_store.enteties.implementation;
+
+import online_store.enteties.Product;
 
 
-public class Product {
+public class DefaultProduct implements Product{
 	private int id;
 	private String name;
 
-	public Product(int id, String name) {
+	public DefaultProduct(int id, String name) {
 		this.id = id;
 		this.name = name;
 	}

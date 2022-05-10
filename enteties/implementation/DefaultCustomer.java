@@ -1,19 +1,21 @@
-package online_store;
+package online_store.enteties.implementation;
+
+import online_store.enteties.Customer;
 
 
-public class Customer {
+public class DefaultCustomer implements Customer{
 	private int id;
 	private String name;
 	private String email;
 	private int password;
-	private Cart cart;
+	private DefaultCart cart;
 	
-	public Customer(int id, String name, String email, int passward) {
+	public DefaultCustomer(int id, String name, String email, int passward) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = passward;
-		setCart(new Cart(name + "'s cart"));
+		setCart(new DefaultCart(name + "'s cart"));
 	}
 	
 	public int getId() {
@@ -40,11 +42,11 @@ public class Customer {
 		this.password = password;
 	}
 	
-	public Cart getCart() {
+	public DefaultCart getCart() {
 		return cart;
 	}
 
-	public void setCart(Cart cart) {
+	public void setCart(DefaultCart cart) {
 		this.cart = cart;
 	}
 	

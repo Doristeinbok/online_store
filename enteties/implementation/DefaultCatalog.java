@@ -1,17 +1,20 @@
-package online_store;
+package online_store.enteties.implementation;
 
 
 import java.util.List;
 import java.util.ArrayList;
 
+import online_store.enteties.Catalog;
+import online_store.enteties.Product;
 
-public class Catalog {
+
+public class DefaultCatalog implements Catalog{
 	private int CAPACITY = 10;
 	private List<Product> products = new ArrayList<>();
 	
-	public Catalog(String[] producArr) {
+	public DefaultCatalog(String[] producArr) {
 		for(int i = 0; i < CAPACITY; ++i) {
-			products.add(new Product(i, producArr[i]));
+			products.add(new DefaultProduct(i, producArr[i]));
 		}
 	}
 		

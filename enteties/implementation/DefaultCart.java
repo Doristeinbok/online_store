@@ -1,17 +1,20 @@
-package online_store;
+package online_store.enteties.implementation;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
+import online_store.enteties.Cart;
+import online_store.enteties.Product;
 
-public class Cart {
+
+public class DefaultCart implements Cart{
 	private String name;
 	private int amount;
 	private List<Product> products = new ArrayList<>(); 
 
 	
-	public Cart(String name) {
+	public DefaultCart(String name) {
 		this.name = name;
 	}
 	

@@ -2,21 +2,28 @@ package online_store;
 
 
 import java.util.Scanner;
+
+import online_store.enteties.implementation.DefaultCatalog;
+import online_store.enteties.implementation.DefaultCustomer;
+import online_store.enteties.implementation.DefaultCart;
+import online_store.enteties.Catalog;
+import online_store.enteties.Product;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 	
-	private static List<Customer> customers = new ArrayList<>();
+	private static List<DefaultCustomer> customers = new ArrayList<>();
 	private static int DEFAULT_INITIAL_USERS = 10;
 	private static int lastUserIndex = 0; 
-	private static Customer currentCustomer = null; 
+	private static DefaultCustomer currentCustomer = null; 
 	
 	static {
-		customers.add(new Customer(0, "dori", "dori@gmail.com", 1234));
-		customers.add(new Customer(1, "gili", "gili@gmail.com", 1234));
-		customers.add(new Customer(2, "lior", "lior@gmail.com", 1234));
-		customers.add(new Customer(3, "beeri", "beeri@gmail.com", 1234));
+		customers.add(new DefaultCustomer(0, "dori", "dori@gmail.com", 1234));
+		customers.add(new DefaultCustomer(1, "gili", "gili@gmail.com", 1234));
+		customers.add(new DefaultCustomer(2, "lior", "lior@gmail.com", 1234));
+		customers.add(new DefaultCustomer(3, "beeri", "beeri@gmail.com", 1234));
 		lastUserIndex = 4;
 	}
 	
@@ -27,9 +34,8 @@ public class Main {
 		String answer = "";
 		int password;	
 		String[] itemsToCatalog= {"computer", "mouse", "keyboard", "cable", "phone",
-							"desk", "chair", "book", "air conditioner", "pen"};
-		Catalog catalog = new Catalog(itemsToCatalog);
-
+							"desk", "chair", "book", "air condi	tioner", "pen"};
+		Catalog catalog = new DefaultCatalog(itemsToCatalog);
 		Scanner sc = new Scanner(System.in);
 		
 		while(true) {
@@ -69,7 +75,7 @@ public class Main {
 					System.out.println("Please insert password");
 					password = sc.nextInt();
 					
-					customers.add(new Customer(lastUserIndex, name, email, password));	
+					customers.add(new DefaultCustomer(lastUserIndex, name, email, password));	
 //					lastUserIndex++;
 					currentCustomer = customers.get(customers.size() - 1);
 					break;
@@ -93,7 +99,7 @@ public class Main {
 					System.out.println("what is your name?");
 					name = sc.next();
 					
-					for(Customer customer : customers) {
+					for(DefaultCustomer customer : customers) {
 						if(customer == null) {
 							System.out.println("empty array");
 							break;
@@ -130,9 +136,9 @@ public class Main {
 						System.out.println("Please enter product id to add to cart");
 						int itemId = sc.nextInt();
 						
-						Cart cart = currentCustomer.getCart();
+						DefaultCart cart = currentCustomer.getCart();
 						
-						Product productToAdd = catalog.getProductById(itemId);
+						Product productToAdd = ((DefaultCatalog)catalog).getProductById(itemId);
 						
 						cart.addProduct(productToAdd);
 						System.out.println(productToAdd.getName() + " was added to cart");
@@ -151,7 +157,7 @@ public class Main {
 						break;
 					}
 					
-					Cart currentCart = currentCustomer.getCart();
+					DefaultCart currentCart = currentCustomer.getCart();
 					if(currentCart.getProducts().isEmpty()) {
 						System.out.println("your cart is empty");
 						break;
@@ -163,7 +169,6 @@ public class Main {
 							System.out.println(product.toString());
 						}
 					}
-					
 					
 					break;
 					
@@ -195,7 +200,7 @@ public class Main {
 					}
 					
 					System.out.println("Customer List:");
-					for(Customer customer : customers) {
+					for(DefaultCustomer customer : customers) {
 						if(null == customer) {
 							break;
 						}
