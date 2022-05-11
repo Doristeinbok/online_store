@@ -61,6 +61,6 @@ public class DefaultCustomer implements Customer{
 	
 	@Override
 	public String toString() {
-		return this.id +"\t" + this.name + "\n";
+		return this.id +"\t" + this.name + "\t" + this.email + "\n";
 	}
 }

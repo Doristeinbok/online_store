@@ -203,7 +203,7 @@ public class Main {
 						if(null == customer) {
 							break;
 						}
-						System.out.println("Id:" + customer.getId() + "\tName:" + customer.getName());
+						System.out.println(customer.toString());
 					}
 					
 					break;

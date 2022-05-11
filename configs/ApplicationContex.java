@@ -10,11 +10,11 @@ public class ApplicationContex {
 	
 	private Customer loggedInCustomer;
 	
-	static {
-		instance = new ApplicationContex();
-	}
-	
 	public static ApplicationContex getInstance() {
+		if(null == instance) {
+			instance = new ApplicationContex();
+		}
+		
 		return instance;
 	}
 	
