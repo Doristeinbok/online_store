@@ -2,22 +2,24 @@ package online_store;
 
 
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
 
 import online_store.enteties.implementation.DefaultCatalog;
 import online_store.enteties.implementation.DefaultCustomer;
 import online_store.enteties.implementation.DefaultCart;
 import online_store.enteties.Catalog;
 import online_store.enteties.Product;
+import online_store.configs.ApplicationContex;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class Main {
 	
 	private static List<DefaultCustomer> customers = new ArrayList<>();
 	private static int DEFAULT_INITIAL_USERS = 10;
 	private static int lastUserIndex = 0; 
-	private static DefaultCustomer currentCustomer = null; 
 	
 	static {
 		customers.add(new DefaultCustomer(0, "dori", "dori@gmail.com", 1234));
@@ -33,6 +35,11 @@ public class Main {
 		String email = "";
 		String answer = "";
 		int password;	
+		
+//		instantiate application instance
+		ApplicationContex instance = new ApplicationContex();		
+		
+		
 		String[] itemsToCatalog= {"computer", "mouse", "keyboard", "cable", "phone",
 							"desk", "chair", "book", "air condi	tioner", "pen"};
 		Catalog catalog = new DefaultCatalog(itemsToCatalog);
@@ -42,7 +49,7 @@ public class Main {
 			System.out.println("************ General form ************");
 			System.out.print("1. Sign up\t\t");
 			System.out.println("4. My Orders");
-			if(currentCustomer == null) {
+			if(null == instance.getLoggedInCustomer()) {
 				System.out.print("2. Sign in\t\t");
 			}else {
 				System.out.print("2. Sign out\t\t");
@@ -77,23 +84,16 @@ public class Main {
 					
 					customers.add(new DefaultCustomer(lastUserIndex, name, email, password));	
 //					lastUserIndex++;
-					currentCustomer = customers.get(customers.size() - 1);
+//					TODO decide when to increment lastUserIndex
+					instance.setLoggedInCustomer(customers.get(customers.size() - 1));
+					
 					break;
 					
 				case 2: //sign in or sign out
-					if(currentCustomer != null) {
-						currentCustomer = null;
+					if(null != instance.getLoggedInCustomer()) {
+						instance.setLoggedInCustomer(null);
 						System.out.println("You just signed out!");
 						break;
-					}
-					if(lastUserIndex == 0) {
-						System.out.println("You can't sign in, because there are 0 customers registered");
-						continue;
-					}
-					
-					if(currentCustomer != null) {
-						System.out.println(currentCustomer.getName() + "is already signed in");
-						continue;
 					}
 					
 					System.out.println("what is your name?");
@@ -109,7 +109,7 @@ public class Main {
 							password = sc.nextInt();
 							if(customer.getPassword() == password) {
 								System.out.println("Welcome back, " + name);
-								currentCustomer = customer;
+								instance.setLoggedInCustomer(customer);
 								break;
 							} else {
 								System.out.println("Wrong id, " + name);
@@ -121,7 +121,7 @@ public class Main {
 					break;
 					
 				case 3: //product catalog
-					if(currentCustomer == null) {
+					if(instance.getLoggedInCustomer() == null) {
 						System.out.println("You need to sign in for purchasing");
 						break;
 					}
@@ -136,8 +136,7 @@ public class Main {
 						System.out.println("Please enter product id to add to cart");
 						int itemId = sc.nextInt();
 						
-						DefaultCart cart = currentCustomer.getCart();
-						
+						DefaultCart cart = ((DefaultCustomer) instance.getLoggedInCustomer()).getCart();
 						Product productToAdd = ((DefaultCatalog)catalog).getProductById(itemId);
 						
 						cart.addProduct(productToAdd);
@@ -152,12 +151,12 @@ public class Main {
 					break;
 					
 				case 4: //My orders
-					if(currentCustomer == null) {
+					if(instance.getLoggedInCustomer() == null) {
 						System.out.println("Please sign in first");
 						break;
 					}
 					
-					DefaultCart currentCart = currentCustomer.getCart();
+					DefaultCart currentCart = ((DefaultCustomer)instance.getLoggedInCustomer()).getCart();
 					if(currentCart.getProducts().isEmpty()) {
 						System.out.println("your cart is empty");
 						break;
@@ -173,7 +172,7 @@ public class Main {
 					break;
 					
 				case 5:
-					if(null == currentCustomer) {
+					if(null == instance.getLoggedInCustomer()) {
 						System.out.println("Please sign in first");
 						break;
 					}
@@ -182,12 +181,12 @@ public class Main {
 					while(1 == flag) {
 						System.out.println("please enter new email");
 						email = sc.next();
-						if(email == currentCustomer.getEmail()) {
+						if(email == ((DefaultCustomer)instance.getLoggedInCustomer()).getEmail()) {
 							System.out.println("The new email is the same as the old one");
 							continue;
 						}
 						
-						currentCustomer.setEmail(email);
+						((DefaultCustomer)instance.getLoggedInCustomer()).setEmail(email);
 						System.out.println("Your new email \"" + email + "\" is set");
 						flag = 0;
 					}
@@ -195,8 +194,8 @@ public class Main {
 					break;
 					
 				case 6: //Customer List
-					if(currentCustomer != null) {
-						System.out.println("You are viewing this list as " + currentCustomer.getName());
+					if(null != instance.getLoggedInCustomer()) {
+						System.out.println("You are viewing this list as " + ((DefaultCustomer)instance.getLoggedInCustomer()).getName());
 					}
 					
 					System.out.println("Customer List:");
